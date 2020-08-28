@@ -48,12 +48,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jr_CY = new javax.swing.JRadioButton();
         jr_CN = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        jg_GuardarPersona = new javax.swing.JButton();
         jg_Sexo = new javax.swing.ButtonGroup();
+        bg_Titulo = new javax.swing.ButtonGroup();
+        bg_Covid = new javax.swing.ButtonGroup();
+        jd_CrearPais = new javax.swing.JDialog();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jt_NombreP = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jd_FechaFundacion = new com.toedter.calendar.JDateChooser();
+        jLabel13 = new javax.swing.JLabel();
+        jt_Himno = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jb_Color = new javax.swing.JButton();
+        jb_GuardarPais = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jm_AgregarPersona = new javax.swing.JMenuItem();
+        jm_AgregarPais = new javax.swing.JMenuItem();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Agregar Persona");
@@ -80,17 +93,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Titulo ");
 
+        bg_Titulo.add(jr_TY);
         jr_TY.setText("Si");
 
+        bg_Titulo.add(jr_Tn);
         jr_Tn.setText("No");
 
         jLabel9.setText("Tiene Covid?");
 
+        bg_Covid.add(jr_CY);
         jr_CY.setText("Si");
 
+        bg_Covid.add(jr_CN);
         jr_CN.setText("No");
 
-        jButton1.setText("Agregar");
+        jg_GuardarPersona.setText("Agregar");
 
         javax.swing.GroupLayout jd_CrearPersonaLayout = new javax.swing.GroupLayout(jd_CrearPersona.getContentPane());
         jd_CrearPersona.getContentPane().setLayout(jd_CrearPersonaLayout);
@@ -143,7 +160,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addComponent(jr_CN))))
                     .addGroup(jd_CrearPersonaLayout.createSequentialGroup()
                         .addGap(244, 244, 244)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jd_CrearPersonaLayout.setVerticalGroup(
@@ -190,19 +207,96 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(jr_CY)
                     .addComponent(jr_CN))
                 .addGap(65, 65, 65)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(113, Short.MAX_VALUE))
+        );
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel10.setText("Crear Un Pais");
+
+        jLabel11.setText("Nombre");
+
+        jLabel12.setText("Fecha Fundacion");
+
+        jLabel13.setText("Himon");
+
+        jLabel14.setText("Color Bandera");
+
+        jb_Color.setBackground(new java.awt.Color(255, 0, 0));
+        jb_Color.setText("Color");
+
+        jb_GuardarPais.setText("Guardar");
+
+        javax.swing.GroupLayout jd_CrearPaisLayout = new javax.swing.GroupLayout(jd_CrearPais.getContentPane());
+        jd_CrearPais.getContentPane().setLayout(jd_CrearPaisLayout);
+        jd_CrearPaisLayout.setHorizontalGroup(
+            jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CrearPaisLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jt_NombreP)
+                    .addComponent(jt_Himno, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
+                .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_CrearPaisLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jd_FechaFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_Color)))
+                    .addGroup(jd_CrearPaisLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_GuardarPais, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+        jd_CrearPaisLayout.setVerticalGroup(
+            jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CrearPaisLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jt_NombreP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addGroup(jd_CrearPaisLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jd_FechaFundacion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addGroup(jd_CrearPaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jt_Himno, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(jb_Color))
+                .addGap(89, 89, 89)
+                .addComponent(jb_GuardarPais, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu3.setText("Herramientas");
 
-        jMenuItem1.setText("Agregar Persona");
-        jMenu3.add(jMenuItem1);
+        jm_AgregarPersona.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jm_AgregarPersona.setText("Agregar Persona");
+        jm_AgregarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_AgregarPersonaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jm_AgregarPersona);
 
-        jMenuItem2.setText("Agregar Pais");
-        jMenu3.add(jMenuItem2);
+        jm_AgregarPais.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jm_AgregarPais.setText("Agregar Pais");
+        jMenu3.add(jm_AgregarPais);
 
         jMenuBar1.add(jMenu3);
 
@@ -221,6 +315,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jm_AgregarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_AgregarPersonaActionPerformed
+       
+        jd_CrearPersona.setModal(true);
+        jd_CrearPersona.pack();
+        jd_CrearPersona.setLocationRelativeTo(jm_AgregarPersona);
+        jd_CrearPersona.setVisible(true);
+        
+    }//GEN-LAST:event_jm_AgregarPersonaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,8 +361,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.ButtonGroup bg_Covid;
+    private javax.swing.ButtonGroup bg_Titulo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -270,10 +379,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JButton jb_Color;
+    private javax.swing.JButton jb_GuardarPais;
+    private javax.swing.JDialog jd_CrearPais;
     private javax.swing.JDialog jd_CrearPersona;
+    private com.toedter.calendar.JDateChooser jd_FechaFundacion;
+    private javax.swing.JButton jg_GuardarPersona;
     private javax.swing.ButtonGroup jg_Sexo;
+    private javax.swing.JMenuItem jm_AgregarPais;
+    private javax.swing.JMenuItem jm_AgregarPersona;
     private javax.swing.JRadioButton jr_CN;
     private javax.swing.JRadioButton jr_CY;
     private javax.swing.JRadioButton jr_F;
@@ -282,8 +396,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jr_Tn;
     private javax.swing.JSpinner js_Edad;
     private javax.swing.JTextField jt_Apellido;
+    private javax.swing.JTextField jt_Himno;
     private javax.swing.JTextField jt_N;
     private javax.swing.JTextField jt_Nombre;
+    private javax.swing.JTextField jt_NombreP;
     private javax.swing.JTextField jt_Vocacion;
     // End of variables declaration//GEN-END:variables
 }
