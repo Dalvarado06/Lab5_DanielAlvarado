@@ -5,6 +5,14 @@
  */
 package lab5_danielalvarado;
 
+import java.awt.Color;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author dalva
@@ -63,6 +71,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jb_Color = new javax.swing.JButton();
         jb_GuardarPais = new javax.swing.JButton();
+        popup_AgregarPersona = new javax.swing.JPopupMenu();
+        popup_Agregar = new javax.swing.JMenuItem();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jl_Masculino = new javax.swing.JList<>();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jl_Femenino = new javax.swing.JList<>();
+        jLabel17 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jl_Paises = new javax.swing.JList<>();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jt_Paises = new javax.swing.JTree();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jt_PaisesCovid = new javax.swing.JTree();
+        jb_ActualizarArbol = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jm_AgregarPersona = new javax.swing.JMenuItem();
@@ -108,6 +134,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jr_CN.setText("No");
 
         jg_GuardarPersona.setText("Agregar");
+        jg_GuardarPersona.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jg_GuardarPersonaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_CrearPersonaLayout = new javax.swing.GroupLayout(jd_CrearPersona.getContentPane());
         jd_CrearPersona.getContentPane().setLayout(jd_CrearPersonaLayout);
@@ -159,8 +190,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jr_CN))))
                     .addGroup(jd_CrearPersonaLayout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(217, 217, 217)
+                        .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jd_CrearPersonaLayout.setVerticalGroup(
@@ -206,9 +237,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jr_CY)
                     .addComponent(jr_CN))
-                .addGap(65, 65, 65)
-                .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addComponent(jg_GuardarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -224,8 +255,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jb_Color.setBackground(new java.awt.Color(255, 0, 0));
         jb_Color.setText("Color");
+        jb_Color.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ColorMouseClicked(evt);
+            }
+        });
 
         jb_GuardarPais.setText("Guardar");
+        jb_GuardarPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_GuardarPaisMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_CrearPaisLayout = new javax.swing.GroupLayout(jd_CrearPais.getContentPane());
         jd_CrearPais.getContentPane().setLayout(jd_CrearPaisLayout);
@@ -281,7 +322,49 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addContainerGap(167, Short.MAX_VALUE))
         );
 
+        popup_Agregar.setText("Agregar persona a pais");
+        popup_Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popup_AgregarActionPerformed(evt);
+            }
+        });
+        popup_AgregarPersona.add(popup_Agregar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jl_Masculino.setModel(new DefaultListModel());
+        jScrollPane1.setViewportView(jl_Masculino);
+
+        jLabel15.setText("Personas Masculinas");
+
+        jLabel16.setText("Personas Femeninas");
+
+        jl_Femenino.setModel(new DefaultListModel());
+        jScrollPane2.setViewportView(jl_Femenino);
+
+        jLabel17.setText("Paises");
+
+        jl_Paises.setModel(new DefaultListModel());
+        jl_Paises.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_PaisesMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jl_Paises);
+
+        jLabel18.setText("Arbol");
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Paises");
+        jt_Paises.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane4.setViewportView(jt_Paises);
+
+        jLabel19.setText("Arbol Covid");
+
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Paises");
+        jt_PaisesCovid.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane5.setViewportView(jt_PaisesCovid);
+
+        jb_ActualizarArbol.setText("----->");
 
         jMenu3.setText("Herramientas");
 
@@ -296,6 +379,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jm_AgregarPais.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jm_AgregarPais.setText("Agregar Pais");
+        jm_AgregarPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_AgregarPaisActionPerformed(evt);
+            }
+        });
         jMenu3.add(jm_AgregarPais);
 
         jMenuBar1.add(jMenu3);
@@ -306,24 +394,373 @@ public class PrincipalFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 787, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(jLabel15)
+                .addGap(202, 202, 202)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel17)
+                .addGap(192, 192, 192))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jb_ActualizarArbol, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)))
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(274, 274, 274)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel19)
+                .addGap(315, 315, 315))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 635, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane3))
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_ActualizarArbol, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(177, 177, 177))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jm_AgregarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_AgregarPersonaActionPerformed
-       
+
         jd_CrearPersona.setModal(true);
         jd_CrearPersona.pack();
         jd_CrearPersona.setLocationRelativeTo(jm_AgregarPersona);
         jd_CrearPersona.setVisible(true);
-        
+
     }//GEN-LAST:event_jm_AgregarPersonaActionPerformed
+
+    private void jm_AgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_AgregarPaisActionPerformed
+        jd_CrearPais.setModal(true);
+        jd_CrearPais.pack();
+        jd_CrearPais.setLocationRelativeTo(jm_AgregarPais);
+        jd_CrearPais.setVisible(true);
+    }//GEN-LAST:event_jm_AgregarPaisActionPerformed
+
+    private void jg_GuardarPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jg_GuardarPersonaMouseClicked
+
+        if (jt_Nombre.getText().equals("") || jt_Apellido.getText().equals("") || js_Edad.getValue().equals("0")
+                || jt_Vocacion.getText().equals("") || jt_N.getText().equals("")) {
+            JOptionPane.showMessageDialog(jd_CrearPersona, "No puede dejar las casillas vacias!");
+        } else {
+            String genero = "";
+            boolean titulo = false;
+            boolean covid = false;
+
+            if (jr_M.isSelected()) {
+                genero = "Masculino";
+            } else if (jr_F.isSelected()) {
+                genero = "Femenino";
+            }
+
+            if (jr_TY.isSelected()) {
+                titulo = true;
+            } else {
+                titulo = false;
+            }
+
+            if (jr_CY.isSelected()) {
+                covid = true;
+            } else {
+                covid = false;
+            }
+
+            Persona p = new Persona(
+                    jt_N.getText(),
+                    jt_Nombre.getText(),
+                    jt_Apellido.getText(),
+                    (int) js_Edad.getValue(),
+                    genero,
+                    jt_Vocacion.getText(),
+                    titulo,
+                    covid
+            );
+
+            if (genero.equals("Masculino")) {
+                DefaultListModel modelo = (DefaultListModel) jl_Masculino.getModel();
+
+                modelo.addElement(p);
+
+                jl_Masculino.setModel(modelo);
+            } else if (genero.equals("Femenino")) {
+                DefaultListModel fModelo = (DefaultListModel) jl_Femenino.getModel();
+
+                fModelo.addElement(p);
+
+                jl_Femenino.setModel(fModelo);
+            }
+
+            jt_N.setText("");
+            jt_Nombre.setText("");
+            jt_Apellido.setText("");
+            js_Edad.setValue(20);
+            jr_M.setSelected(true);
+            jr_CY.setSelected(true);
+            jr_TY.setSelected(true);
+        }
+    }//GEN-LAST:event_jg_GuardarPersonaMouseClicked
+
+    private void jb_GuardarPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_GuardarPaisMouseClicked
+
+        if (jt_NombreP.getText().equals("") || jt_Himno.getText().equals("")) {
+            JOptionPane.showMessageDialog(jd_CrearPais, "No puede dejar las casillas vacias!");
+        } else {
+
+            Pais p = new Pais(
+                    jt_NombreP.getText(),
+                    jd_FechaFundacion.getDate(),
+                    jt_Himno.getText(),
+                    jb_Color.getBackground()
+            );
+
+            DefaultListModel modelo = (DefaultListModel) jl_Paises.getModel();
+
+            modelo.addElement(p);
+
+            jl_Paises.setModel(modelo);
+
+            jt_NombreP.setText("");
+            jd_FechaFundacion.setDate(new Date());
+            jt_Himno.setText("");
+            jb_Color.setBackground(Color.red);
+        }
+    }//GEN-LAST:event_jb_GuardarPaisMouseClicked
+
+    private void jb_ColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ColorMouseClicked
+
+        jb_Color.setBackground(JColorChooser.showDialog(jd_CrearPais, "Elija un color: ", Color.yellow));
+    }//GEN-LAST:event_jb_ColorMouseClicked
+
+    private void popup_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popup_AgregarActionPerformed
+        DefaultTreeModel modeloArbol = (DefaultTreeModel) jt_Paises.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloArbol.getRoot();
+        DefaultListModel modeloM = (DefaultListModel) jl_Masculino.getModel();
+        DefaultListModel modeloP = (DefaultListModel) jl_Paises.getModel();
+        DefaultListModel modeloF = (DefaultListModel) jl_Femenino.getModel();
+/*
+        int n = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese de que lista va a agregar 1 =(Femenino) o 2 = (Masculino)"));
+
+        int num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+        Persona per;
+        
+        
+        if (n == 1) {
+            per = 
+        }
+*/
+        int in = jl_Paises.getSelectedIndex();
+        Pais p = (Pais) modeloP.getElementAt(in);
+        String pais = p.getNombre();
+
+        if (jl_Masculino.getSelectedIndex() >= 0) {
+            int index = jl_Masculino.getSelectedIndex();
+            Persona per = (Persona) modeloM.getElementAt(index);
+
+            int centinela = -1;
+            int centi2 = 0;
+
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                if (nodo_Pais.toString().equals(pais)) {
+
+                    for (int j = 0; j < nodo_Pais.getChildCount(); j++) {
+                        DefaultMutableTreeNode nodo_Sexo = (DefaultMutableTreeNode) nodo_Pais.getChildAt(j);
+
+                        if (nodo_Sexo.toString().equals(per.getGenero())) {
+
+                            DefaultMutableTreeNode nodo_Persona = new DefaultMutableTreeNode(per);
+
+                            nodo_Sexo.add(nodo_Persona);
+                            nodo_Pais.add(nodo_Sexo);
+                            raiz.add(nodo_Pais);
+                            
+                            System.out.println("Llegue");
+                            modeloArbol.reload();
+                        } else {
+                            centi2 = -2;
+                        }
+
+                    }
+
+                } else {
+                    centinela = -1;
+                }
+
+            }
+
+            if (centinela == -1) {
+
+                for (int i = 0; i < raiz.getChildCount(); i++) {
+                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(per.getNacionalidad());
+                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
+                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
+
+                    nodo_sexo.add(nodo_per);
+                    nodo_c.add(nodo_sexo);
+                    raiz.add(nodo_c);
+                    System.out.println("Im Here");
+                    modeloArbol.reload();
+
+                }
+
+            }
+            if (centi2 == -2) {
+
+                for (int i = 0; i < raiz.getChildCount(); i++) {
+                    DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                    if (nacionalidad.toString().equals(per.getNacionalidad())) {
+
+                        for (int j = 0; j < nacionalidad.getChildCount(); j++) {
+                            DefaultMutableTreeNode genero = (DefaultMutableTreeNode) nacionalidad.getChildAt(j);
+
+                            if (genero.toString().equals(per.getGenero())) {
+                                DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
+                                genero.add(persona);
+                                nacionalidad.add(genero);
+                                raiz.add(nacionalidad);
+                                System.out.println("Llegue");
+                                modeloArbol.reload();
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            modeloArbol.reload();
+
+        } else if (jl_Femenino.getSelectedIndex() >= 0) {
+
+      
+            int index = jl_Femenino.getSelectedIndex();
+            Persona per = (Persona) modeloF.getElementAt(index);
+
+            int centinela = 0;
+            int centi2 = 0;
+
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                if (nodo_Pais.toString().equals(pais)) {
+
+                    for (int j = 0; j < nodo_Pais.getChildCount(); j++) {
+                        DefaultMutableTreeNode nodo_Sexo = (DefaultMutableTreeNode) nodo_Pais.getChildAt(j);
+
+                        if (nodo_Sexo.toString().equals(per.getGenero())) {
+
+                            DefaultMutableTreeNode nodo_Persona = new DefaultMutableTreeNode(per);
+
+                            nodo_Sexo.add(nodo_Persona);
+                            nodo_Pais.add(nodo_Sexo);
+                            raiz.add(nodo_Pais);
+                            System.out.println("Im here");
+                            modeloArbol.reload();
+                        } else {
+                            centi2 = -2;
+                        }
+
+                    }
+
+                } else {
+                    centinela = -1;
+                }
+
+            }
+
+            if (centinela == -1) {
+
+                for (int i = 0; i < raiz.getChildCount(); i++) {
+                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(per.getNacionalidad());
+                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
+                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
+                    System.out.println("Im here");
+                    nodo_sexo.add(nodo_per);
+                    nodo_c.add(nodo_sexo);
+                    raiz.add(nodo_c);
+
+                    modeloArbol.reload();
+
+                }
+
+            }
+            if (centi2 == -2) {
+
+                for (int i = 0; i < raiz.getChildCount(); i++) {
+                    DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                    if (nacionalidad.toString().equals(per.getNacionalidad())) {
+
+                        for (int j = 0; j < nacionalidad.getChildCount(); j++) {
+                            DefaultMutableTreeNode genero = (DefaultMutableTreeNode) nacionalidad.getChildAt(j);
+
+                            if (genero.toString().equals(per.getGenero())) {
+                                DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
+                                genero.add(persona);
+                                nacionalidad.add(genero);
+                                raiz.add(nacionalidad);
+                                System.out.println("Im here");
+                                modeloArbol.reload();
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            modeloArbol.reload();
+        } else {
+            JOptionPane.showMessageDialog(jl_Paises, "No hay personas seleccionadas en listas");
+        }
+    }//GEN-LAST:event_popup_AgregarActionPerformed
+
+    private void jl_PaisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_PaisesMouseClicked
+        if (jl_Paises.getSelectedIndex() >= 0) {
+
+            if (evt.isMetaDown()) {
+                popup_AgregarPersona.show(jl_Paises, evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_jl_PaisesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -369,6 +806,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -379,6 +821,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JButton jb_ActualizarArbol;
     private javax.swing.JButton jb_Color;
     private javax.swing.JButton jb_GuardarPais;
     private javax.swing.JDialog jd_CrearPais;
@@ -386,6 +834,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jd_FechaFundacion;
     private javax.swing.JButton jg_GuardarPersona;
     private javax.swing.ButtonGroup jg_Sexo;
+    private javax.swing.JList<String> jl_Femenino;
+    private javax.swing.JList<String> jl_Masculino;
+    private javax.swing.JList<String> jl_Paises;
     private javax.swing.JMenuItem jm_AgregarPais;
     private javax.swing.JMenuItem jm_AgregarPersona;
     private javax.swing.JRadioButton jr_CN;
@@ -400,6 +851,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jt_N;
     private javax.swing.JTextField jt_Nombre;
     private javax.swing.JTextField jt_NombreP;
+    private javax.swing.JTree jt_Paises;
+    private javax.swing.JTree jt_PaisesCovid;
     private javax.swing.JTextField jt_Vocacion;
+    private javax.swing.JMenuItem popup_Agregar;
+    private javax.swing.JPopupMenu popup_AgregarPersona;
     // End of variables declaration//GEN-END:variables
 }
