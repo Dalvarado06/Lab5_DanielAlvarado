@@ -7,6 +7,8 @@ package lab5_danielalvarado;
 
 import java.awt.Color;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
@@ -73,6 +75,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jb_GuardarPais = new javax.swing.JButton();
         popup_AgregarPersona = new javax.swing.JPopupMenu();
         popup_Agregar = new javax.swing.JMenuItem();
+        popup_ModArbol = new javax.swing.JPopupMenu();
+        jm_AgregarP = new javax.swing.JMenuItem();
+        jm_Modificar = new javax.swing.JMenuItem();
+        jm_Eliminar = new javax.swing.JMenuItem();
+        popup_ModPersona = new javax.swing.JPopupMenu();
+        jp_EliminarPer = new javax.swing.JMenuItem();
+        jp_ModPer = new javax.swing.JMenuItem();
+        jp_ExpatriarPer = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jl_Masculino = new javax.swing.JList<>();
         jLabel15 = new javax.swing.JLabel();
@@ -249,7 +259,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel12.setText("Fecha Fundacion");
 
-        jLabel13.setText("Himon");
+        jLabel13.setText("Himno");
 
         jLabel14.setText("Color Bandera");
 
@@ -329,6 +339,55 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
         popup_AgregarPersona.add(popup_Agregar);
+
+        popup_ModArbol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                popup_ModArbolMouseClicked(evt);
+            }
+        });
+
+        jm_AgregarP.setText("Agregar Persona");
+        popup_ModArbol.add(jm_AgregarP);
+
+        jm_Modificar.setText("jMenuItem2");
+        jm_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_ModificarActionPerformed(evt);
+            }
+        });
+        popup_ModArbol.add(jm_Modificar);
+
+        jm_Eliminar.setText("jMenuItem3");
+        jm_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_EliminarActionPerformed(evt);
+            }
+        });
+        popup_ModArbol.add(jm_Eliminar);
+
+        jp_EliminarPer.setText("Eliminar Persona");
+        jp_EliminarPer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jp_EliminarPerActionPerformed(evt);
+            }
+        });
+        popup_ModPersona.add(jp_EliminarPer);
+
+        jp_ModPer.setText("Modificar Persona");
+        jp_ModPer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jp_ModPerActionPerformed(evt);
+            }
+        });
+        popup_ModPersona.add(jp_ModPer);
+
+        jp_ExpatriarPer.setText("Expatriar Persona");
+        jp_ExpatriarPer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jp_ExpatriarPerActionPerformed(evt);
+            }
+        });
+        popup_ModPersona.add(jp_ExpatriarPer);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -535,6 +594,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             jr_M.setSelected(true);
             jr_CY.setSelected(true);
             jr_TY.setSelected(true);
+            jt_Vocacion.setText("");
+
         }
     }//GEN-LAST:event_jg_GuardarPersonaMouseClicked
 
@@ -575,30 +636,47 @@ public class PrincipalFrame extends javax.swing.JFrame {
         DefaultListModel modeloM = (DefaultListModel) jl_Masculino.getModel();
         DefaultListModel modeloP = (DefaultListModel) jl_Paises.getModel();
         DefaultListModel modeloF = (DefaultListModel) jl_Femenino.getModel();
-/*
+
         int n = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese de que lista va a agregar 1 =(Femenino) o 2 = (Masculino)"));
 
         int num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
-        Persona per;
-        
-        
+        Persona per = new Persona();
+
         if (n == 1) {
-            per = 
+            while (num < 0 || num > modeloF.getSize()) {
+                num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+            }
+
+            per = (Persona) modeloF.getElementAt(num);
+
+        } else if (n == 2) {
+            while (num < 0 || num > modeloM.getSize()) {
+                num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+            }
+
+            per = (Persona) modeloM.getElementAt(num);
         }
-*/
+        
+
         int in = jl_Paises.getSelectedIndex();
         Pais p = (Pais) modeloP.getElementAt(in);
         String pais = p.getNombre();
+        pais = pais.trim();
+        boolean flag = false;
+        boolean flag2 = false;
 
-        if (jl_Masculino.getSelectedIndex() >= 0) {
-            int index = jl_Masculino.getSelectedIndex();
-            Persona per = (Persona) modeloM.getElementAt(index);
+        System.out.println("Im actually here");
 
-            int centinela = -1;
-            int centi2 = 0;
+        if (p.getNombre().equals(per.getNacionalidad())) {
+
+            int centinela = 1;
+            int centi2 = 2;
+            System.out.println("Entre");
 
             for (int i = 0; i < raiz.getChildCount(); i++) {
                 DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
+                System.out.println("here?");
+                flag = true;
 
                 if (nodo_Pais.toString().equals(pais)) {
 
@@ -606,16 +684,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         DefaultMutableTreeNode nodo_Sexo = (DefaultMutableTreeNode) nodo_Pais.getChildAt(j);
 
                         if (nodo_Sexo.toString().equals(per.getGenero())) {
-
+                            flag2 = true;
                             DefaultMutableTreeNode nodo_Persona = new DefaultMutableTreeNode(per);
 
                             nodo_Sexo.add(nodo_Persona);
                             nodo_Pais.add(nodo_Sexo);
                             raiz.add(nodo_Pais);
-                            
+
                             System.out.println("Llegue");
                             modeloArbol.reload();
-                        } else {
+                        }
+
+                        if (flag2 == false) {
                             centi2 = -2;
                         }
 
@@ -627,130 +707,50 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
             }
 
+            if (flag == false) {
+                centinela = -1;
+            }
+
             if (centinela == -1) {
 
-                for (int i = 0; i < raiz.getChildCount(); i++) {
-                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(per.getNacionalidad());
-                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
-                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
+                DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(p);
+                DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
+                DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
 
-                    nodo_sexo.add(nodo_per);
-                    nodo_c.add(nodo_sexo);
-                    raiz.add(nodo_c);
-                    System.out.println("Im Here");
-                    modeloArbol.reload();
-
-                }
+                nodo_sexo.add(nodo_per);
+                nodo_c.add(nodo_sexo);
+                raiz.add(nodo_c);
+                System.out.println("Im Here");
+                modeloArbol.reload();
 
             }
             if (centi2 == -2) {
-
+                System.out.println("hacer un nuevo nodo");
                 for (int i = 0; i < raiz.getChildCount(); i++) {
                     DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
 
                     if (nacionalidad.toString().equals(per.getNacionalidad())) {
 
-                        for (int j = 0; j < nacionalidad.getChildCount(); j++) {
-                            DefaultMutableTreeNode genero = (DefaultMutableTreeNode) nacionalidad.getChildAt(j);
+                        DefaultMutableTreeNode genero = new DefaultMutableTreeNode(per.getGenero());
+                        DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
+                        genero.add(persona);
+                        nacionalidad.add(genero);
+                        raiz.add(nacionalidad);
+                        System.out.println("Llegue");
+                        modeloArbol.reload();
 
-                            if (genero.toString().equals(per.getGenero())) {
-                                DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
-                                genero.add(persona);
-                                nacionalidad.add(genero);
-                                raiz.add(nacionalidad);
-                                System.out.println("Llegue");
-                                modeloArbol.reload();
-                            }
-                        }
                     }
 
                 }
             }
 
             modeloArbol.reload();
-
-        } else if (jl_Femenino.getSelectedIndex() >= 0) {
-
-      
-            int index = jl_Femenino.getSelectedIndex();
-            Persona per = (Persona) modeloF.getElementAt(index);
-
-            int centinela = 0;
-            int centi2 = 0;
-
-            for (int i = 0; i < raiz.getChildCount(); i++) {
-                DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
-
-                if (nodo_Pais.toString().equals(pais)) {
-
-                    for (int j = 0; j < nodo_Pais.getChildCount(); j++) {
-                        DefaultMutableTreeNode nodo_Sexo = (DefaultMutableTreeNode) nodo_Pais.getChildAt(j);
-
-                        if (nodo_Sexo.toString().equals(per.getGenero())) {
-
-                            DefaultMutableTreeNode nodo_Persona = new DefaultMutableTreeNode(per);
-
-                            nodo_Sexo.add(nodo_Persona);
-                            nodo_Pais.add(nodo_Sexo);
-                            raiz.add(nodo_Pais);
-                            System.out.println("Im here");
-                            modeloArbol.reload();
-                        } else {
-                            centi2 = -2;
-                        }
-
-                    }
-
-                } else {
-                    centinela = -1;
-                }
-
-            }
-
-            if (centinela == -1) {
-
-                for (int i = 0; i < raiz.getChildCount(); i++) {
-                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(per.getNacionalidad());
-                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
-                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
-                    System.out.println("Im here");
-                    nodo_sexo.add(nodo_per);
-                    nodo_c.add(nodo_sexo);
-                    raiz.add(nodo_c);
-
-                    modeloArbol.reload();
-
-                }
-
-            }
-            if (centi2 == -2) {
-
-                for (int i = 0; i < raiz.getChildCount(); i++) {
-                    DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
-
-                    if (nacionalidad.toString().equals(per.getNacionalidad())) {
-
-                        for (int j = 0; j < nacionalidad.getChildCount(); j++) {
-                            DefaultMutableTreeNode genero = (DefaultMutableTreeNode) nacionalidad.getChildAt(j);
-
-                            if (genero.toString().equals(per.getGenero())) {
-                                DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
-                                genero.add(persona);
-                                nacionalidad.add(genero);
-                                raiz.add(nacionalidad);
-                                System.out.println("Im here");
-                                modeloArbol.reload();
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            modeloArbol.reload();
+            System.out.println("Me perdi y no hice nada");
+            
         } else {
-            JOptionPane.showMessageDialog(jl_Paises, "No hay personas seleccionadas en listas");
+            JOptionPane.showMessageDialog(jl_Paises, "Las nacionalidades no concuerdan!!");
         }
+
     }//GEN-LAST:event_popup_AgregarActionPerformed
 
     private void jl_PaisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_PaisesMouseClicked
@@ -761,6 +761,96 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jl_PaisesMouseClicked
+
+    private void jm_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_ModificarActionPerformed
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+        
+        
+         String himno =JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo himno para el pais: ");
+         
+         paisSeleccionado.setNombreHimno(himno);
+         
+         JOptionPane.showMessageDialog(jt_Paises, "Se cambio el himno del pais");
+        
+         
+         
+         modelo.reload();
+         
+    }//GEN-LAST:event_jm_ModificarActionPerformed
+
+    private void jm_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_EliminarActionPerformed
+       DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+       DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+       
+       raiz.remove(nodo_Seleccionado);
+       
+       JOptionPane.showMessageDialog(jt_Paises, "El nodo ha sido eliminado");
+       
+       
+       
+    }//GEN-LAST:event_jm_EliminarActionPerformed
+
+    private void popup_ModArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_popup_ModArbolMouseClicked
+        if(evt.isMetaDown()){
+            
+            int row = jt_Paises.getClosestRowForLocation(evt.getX(), evt.getY());
+            jt_Paises.setSelectionRow(row);
+            
+            
+            Object o = jt_Paises.getSelectionPath().getLastPathComponent();
+            
+            if(o instanceof Pais){
+                
+                popup_ModArbol.show(jt_Paises, evt.getX(), evt.getX());
+                nodo_Seleccionado = (DefaultMutableTreeNode)o;
+                paisSeleccionado = (Pais)o;
+            }else if(o instanceof Persona){
+                popup_ModPersona.show(jt_Paises, evt.getX(), evt.getY());
+                nodo_Seleccionado = (DefaultMutableTreeNode)o;
+                personaSeleccionada = (Persona)o;
+            }
+        }
+    }//GEN-LAST:event_popup_ModArbolMouseClicked
+
+    private void jp_EliminarPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_EliminarPerActionPerformed
+        
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+        
+        modelo.removeNodeFromParent(nodo_Seleccionado);
+        
+        JOptionPane.showMessageDialog(jt_Paises, "Se elimino la persona correctamente");
+    }//GEN-LAST:event_jp_EliminarPerActionPerformed
+
+    private void jp_ExpatriarPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_ExpatriarPerActionPerformed
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+        
+        modelo.removeNodeFromParent(nodo_Seleccionado);
+        
+        
+        if(personaSeleccionada.getGenero().equals("Masculino")){
+            DefaultListModel mod = (DefaultListModel) jl_Masculino.getModel();
+            
+            mod.addElement(personaSeleccionada);
+        }else if(personaSeleccionada.getGenero().equals("Femenino")){
+            DefaultListModel modf = (DefaultListModel) jl_Femenino.getModel();
+            
+            modf.addElement(personaSeleccionada);
+            
+            
+            JOptionPane.showMessageDialog(jt_Paises, "Se expatrio correctamente a la persona");
+        }
+    }//GEN-LAST:event_jp_ExpatriarPerActionPerformed
+
+    private void jp_ModPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_ModPerActionPerformed
+       DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+       
+       personaSeleccionada.setNombre(JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo nombre: "));
+       
+       JOptionPane.showMessageDialog(jt_Paises, "Se modifico el nombre de la persona");
+       
+       modelo.reload();
+    }//GEN-LAST:event_jp_ModPerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -837,8 +927,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_Femenino;
     private javax.swing.JList<String> jl_Masculino;
     private javax.swing.JList<String> jl_Paises;
+    private javax.swing.JMenuItem jm_AgregarP;
     private javax.swing.JMenuItem jm_AgregarPais;
     private javax.swing.JMenuItem jm_AgregarPersona;
+    private javax.swing.JMenuItem jm_Eliminar;
+    private javax.swing.JMenuItem jm_Modificar;
+    private javax.swing.JMenuItem jp_EliminarPer;
+    private javax.swing.JMenuItem jp_ExpatriarPer;
+    private javax.swing.JMenuItem jp_ModPer;
     private javax.swing.JRadioButton jr_CN;
     private javax.swing.JRadioButton jr_CY;
     private javax.swing.JRadioButton jr_F;
@@ -856,5 +952,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jt_Vocacion;
     private javax.swing.JMenuItem popup_Agregar;
     private javax.swing.JPopupMenu popup_AgregarPersona;
+    private javax.swing.JPopupMenu popup_ModArbol;
+    private javax.swing.JPopupMenu popup_ModPersona;
     // End of variables declaration//GEN-END:variables
+
+    DefaultMutableTreeNode nodo_Seleccionado;
+    Pais paisSeleccionado;
+    Persona personaSeleccionada;
+
 }
