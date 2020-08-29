@@ -341,9 +341,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         popup_AgregarPersona.add(popup_Agregar);
 
         jm_AgregarP.setText("Agregar Persona");
+        jm_AgregarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_AgregarPActionPerformed(evt);
+            }
+        });
         popup_ModArbol.add(jm_AgregarP);
 
-        jm_Modificar.setText("jMenuItem2");
+        jm_Modificar.setText("Modificar Pais");
         jm_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jm_ModificarActionPerformed(evt);
@@ -351,7 +356,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         popup_ModArbol.add(jm_Modificar);
 
-        jm_Eliminar.setText("jMenuItem3");
+        jm_Eliminar.setText("Eliminar Pais");
         jm_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jm_EliminarActionPerformed(evt);
@@ -420,6 +425,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Paises");
         jt_PaisesCovid.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_PaisesCovid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_PaisesCovidMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jt_PaisesCovid);
 
         jb_ActualizarArbol.setText("----->");
@@ -664,17 +674,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         boolean flag2 = false;
         boolean flagM = true;
 
-        
-
         if (p.getNombre().equals(per.getNacionalidad())) {
 
             int centinela = 1;
             int centi2 = 2;
-            
 
             for (int i = 0; i < raiz.getChildCount(); i++) {
                 DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
-                
+
                 flag = true;
 
                 if (nodo_Pais.toString().equals(pais)) {
@@ -691,7 +698,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             raiz.add(nodo_Pais);
 
                             flagM = false;
-                           
+
                         }
 
                         if (flag2 == false) {
@@ -721,12 +728,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     nodo_sexo.add(nodo_per);
                     nodo_c.add(nodo_sexo);
                     raiz.add(nodo_c);
-                   
+
                     modeloArbol.reload();
 
                 }
                 if (centi2 == -2) {
-                  
+
                     for (int i = 0; i < raiz.getChildCount(); i++) {
                         DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
 
@@ -737,7 +744,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             genero.add(persona);
                             nacionalidad.add(genero);
                             raiz.add(nacionalidad);
-                           
+
                             modeloArbol.reload();
 
                         }
@@ -746,7 +753,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 }
 
                 modeloArbol.reload();
-               
+
             }
         } else {
             JOptionPane.showMessageDialog(jl_Paises, "Las nacionalidades no concuerdan!!");
@@ -785,6 +792,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(jt_Paises, "El nodo ha sido eliminado");
 
+        modelo.reload();
 
     }//GEN-LAST:event_jm_EliminarActionPerformed
 
@@ -833,19 +841,166 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
             Object o = jt_Paises.getSelectionPath().getLastPathComponent();
 
+            nodo_Seleccionado = (DefaultMutableTreeNode) o;
+
             if (nodo_Seleccionado.getUserObject() instanceof Pais) {
 
                 popup_ModArbol.show(jt_Paises, evt.getX(), evt.getX());
-                nodo_Seleccionado = (DefaultMutableTreeNode) o;
-                paisSeleccionado = (Pais) o;
-                
+
+                paisSeleccionado = (Pais) nodo_Seleccionado.getUserObject();
+
             } else if (nodo_Seleccionado.getUserObject() instanceof Persona) {
                 popup_ModPersona.show(jt_Paises, evt.getX(), evt.getY());
-                nodo_Seleccionado = (DefaultMutableTreeNode) o;
-                personaSeleccionada = (Persona) o;
+
+                personaSeleccionada = (Persona) nodo_Seleccionado.getUserObject();
             }
         }
     }//GEN-LAST:event_jt_PaisesMouseClicked
+
+    private void jm_AgregarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_AgregarPActionPerformed
+        DefaultTreeModel modeloArbol = (DefaultTreeModel) jt_Paises.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloArbol.getRoot();
+        DefaultListModel modeloM = (DefaultListModel) jl_Masculino.getModel();
+        DefaultListModel modeloP = (DefaultListModel) jl_Paises.getModel();
+        DefaultListModel modeloF = (DefaultListModel) jl_Femenino.getModel();
+
+        int n = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese de que lista va a agregar 1 =(Femenino) o 2 = (Masculino)"));
+
+        int num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+        Persona per = new Persona();
+
+        if (n == 1) {
+            while (num < 0 || num > modeloF.getSize()) {
+                num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+            }
+
+            per = (Persona) modeloF.getElementAt(num);
+
+        } else if (n == 2) {
+            while (num < 0 || num > modeloM.getSize()) {
+                num = Integer.parseInt(JOptionPane.showInputDialog(jl_Paises, "Ingrese el indice: "));
+            }
+
+            per = (Persona) modeloM.getElementAt(num);
+        }
+
+        int in = jl_Paises.getSelectedIndex();
+        Pais p = (Pais) modeloP.getElementAt(in);
+        String pais = p.getNombre();
+        pais = pais.trim();
+        boolean flag = false;
+        boolean flag2 = false;
+        boolean flagM = true;
+
+        if (p.getNombre().equals(per.getNacionalidad())) {
+
+            int centinela = 1;
+            int centi2 = 2;
+
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                flag = true;
+
+                if (nodo_Pais.toString().equals(pais)) {
+
+                    for (int j = 0; j < nodo_Pais.getChildCount(); j++) {
+                        DefaultMutableTreeNode nodo_Sexo = (DefaultMutableTreeNode) nodo_Pais.getChildAt(j);
+
+                        if (nodo_Sexo.toString().equals(per.getGenero())) {
+                            flag2 = true;
+                            DefaultMutableTreeNode nodo_Persona = new DefaultMutableTreeNode(per);
+
+                            nodo_Sexo.add(nodo_Persona);
+                            nodo_Pais.add(nodo_Sexo);
+                            raiz.add(nodo_Pais);
+
+                            flagM = false;
+
+                        }
+
+                        if (flag2 == false) {
+                            centi2 = -2;
+                        }
+
+                    }
+
+                } else {
+                    centinela = -1;
+                }
+
+            }
+
+            if (flag == false) {
+                centinela = -1;
+            }
+
+            if (flagM) {
+
+                if (centinela == -1) {
+
+                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(p);
+                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
+                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
+
+                    nodo_sexo.add(nodo_per);
+                    nodo_c.add(nodo_sexo);
+                    raiz.add(nodo_c);
+
+                    modeloArbol.reload();
+
+                }
+                if (centi2 == -2) {
+
+                    for (int i = 0; i < raiz.getChildCount(); i++) {
+                        DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
+
+                        if (nacionalidad.toString().equals(per.getNacionalidad())) {
+
+                            DefaultMutableTreeNode genero = new DefaultMutableTreeNode(per.getGenero());
+                            DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
+                            genero.add(persona);
+                            nacionalidad.add(genero);
+                            raiz.add(nacionalidad);
+
+                            modeloArbol.reload();
+
+                        }
+
+                    }
+                }
+
+                modeloArbol.reload();
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(jl_Paises, "Las nacionalidades no concuerdan!!");
+        }
+    }//GEN-LAST:event_jm_AgregarPActionPerformed
+
+    private void jt_PaisesCovidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_PaisesCovidMouseClicked
+        if (evt.isMetaDown()) {
+
+            int row = jt_Paises.getClosestRowForLocation(evt.getX(), evt.getY());
+            jt_Paises.setSelectionRow(row);
+
+            Object o = jt_Paises.getSelectionPath().getLastPathComponent();
+
+            nodo_Seleccionado = (DefaultMutableTreeNode) o;
+
+            if (nodo_Seleccionado.getUserObject() instanceof Pais) {
+
+                popup_ModArbol.show(jt_Paises, evt.getX(), evt.getX());
+
+                paisSeleccionado = (Pais) nodo_Seleccionado.getUserObject();
+
+            } else if (nodo_Seleccionado.getUserObject() instanceof Persona) {
+                popup_ModPersona.show(jt_Paises, evt.getX(), evt.getY());
+
+                personaSeleccionada = (Persona) nodo_Seleccionado.getUserObject();
+            }
+        }
+    }//GEN-LAST:event_jt_PaisesCovidMouseClicked
 
     /**
      * @param args the command line arguments
