@@ -340,12 +340,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         popup_AgregarPersona.add(popup_Agregar);
 
-        popup_ModArbol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                popup_ModArbolMouseClicked(evt);
-            }
-        });
-
         jm_AgregarP.setText("Agregar Persona");
         popup_ModArbol.add(jm_AgregarP);
 
@@ -415,6 +409,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Paises");
         jt_Paises.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_Paises.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_PaisesMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jt_Paises);
 
         jLabel19.setText("Arbol Covid");
@@ -656,7 +655,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
             per = (Persona) modeloM.getElementAt(num);
         }
-        
 
         int in = jl_Paises.getSelectedIndex();
         Pais p = (Pais) modeloP.getElementAt(in);
@@ -664,18 +662,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pais = pais.trim();
         boolean flag = false;
         boolean flag2 = false;
+        boolean flagM = true;
 
-        System.out.println("Im actually here");
+        
 
         if (p.getNombre().equals(per.getNacionalidad())) {
 
             int centinela = 1;
             int centi2 = 2;
-            System.out.println("Entre");
+            
 
             for (int i = 0; i < raiz.getChildCount(); i++) {
                 DefaultMutableTreeNode nodo_Pais = (DefaultMutableTreeNode) raiz.getChildAt(i);
-                System.out.println("here?");
+                
                 flag = true;
 
                 if (nodo_Pais.toString().equals(pais)) {
@@ -691,8 +690,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             nodo_Pais.add(nodo_Sexo);
                             raiz.add(nodo_Pais);
 
-                            System.out.println("Llegue");
-                            modeloArbol.reload();
+                            flagM = false;
+                           
                         }
 
                         if (flag2 == false) {
@@ -711,42 +710,44 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 centinela = -1;
             }
 
-            if (centinela == -1) {
+            if (flagM) {
 
-                DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(p);
-                DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
-                DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
+                if (centinela == -1) {
 
-                nodo_sexo.add(nodo_per);
-                nodo_c.add(nodo_sexo);
-                raiz.add(nodo_c);
-                System.out.println("Im Here");
-                modeloArbol.reload();
+                    DefaultMutableTreeNode nodo_c = new DefaultMutableTreeNode(p);
+                    DefaultMutableTreeNode nodo_sexo = new DefaultMutableTreeNode(per.getGenero());
+                    DefaultMutableTreeNode nodo_per = new DefaultMutableTreeNode(per);
 
-            }
-            if (centi2 == -2) {
-                System.out.println("hacer un nuevo nodo");
-                for (int i = 0; i < raiz.getChildCount(); i++) {
-                    DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
-
-                    if (nacionalidad.toString().equals(per.getNacionalidad())) {
-
-                        DefaultMutableTreeNode genero = new DefaultMutableTreeNode(per.getGenero());
-                        DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
-                        genero.add(persona);
-                        nacionalidad.add(genero);
-                        raiz.add(nacionalidad);
-                        System.out.println("Llegue");
-                        modeloArbol.reload();
-
-                    }
+                    nodo_sexo.add(nodo_per);
+                    nodo_c.add(nodo_sexo);
+                    raiz.add(nodo_c);
+                   
+                    modeloArbol.reload();
 
                 }
-            }
+                if (centi2 == -2) {
+                  
+                    for (int i = 0; i < raiz.getChildCount(); i++) {
+                        DefaultMutableTreeNode nacionalidad = (DefaultMutableTreeNode) raiz.getChildAt(i);
 
-            modeloArbol.reload();
-            System.out.println("Me perdi y no hice nada");
-            
+                        if (nacionalidad.toString().equals(per.getNacionalidad())) {
+
+                            DefaultMutableTreeNode genero = new DefaultMutableTreeNode(per.getGenero());
+                            DefaultMutableTreeNode persona = new DefaultMutableTreeNode(per);
+                            genero.add(persona);
+                            nacionalidad.add(genero);
+                            raiz.add(nacionalidad);
+                           
+                            modeloArbol.reload();
+
+                        }
+
+                    }
+                }
+
+                modeloArbol.reload();
+               
+            }
         } else {
             JOptionPane.showMessageDialog(jl_Paises, "Las nacionalidades no concuerdan!!");
         }
@@ -765,92 +766,86 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void jm_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_ModificarActionPerformed
         DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-        
-        
-         String himno =JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo himno para el pais: ");
-         
-         paisSeleccionado.setNombreHimno(himno);
-         
-         JOptionPane.showMessageDialog(jt_Paises, "Se cambio el himno del pais");
-        
-         
-         
-         modelo.reload();
-         
+
+        String himno = JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo himno para el pais: ");
+
+        paisSeleccionado.setNombreHimno(himno);
+
+        JOptionPane.showMessageDialog(jt_Paises, "Se cambio el himno del pais");
+
+        modelo.reload();
+
     }//GEN-LAST:event_jm_ModificarActionPerformed
 
     private void jm_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_EliminarActionPerformed
-       DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
-       DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-       
-       raiz.remove(nodo_Seleccionado);
-       
-       JOptionPane.showMessageDialog(jt_Paises, "El nodo ha sido eliminado");
-       
-       
-       
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+
+        raiz.remove(nodo_Seleccionado);
+
+        JOptionPane.showMessageDialog(jt_Paises, "El nodo ha sido eliminado");
+
+
     }//GEN-LAST:event_jm_EliminarActionPerformed
 
-    private void popup_ModArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_popup_ModArbolMouseClicked
-        if(evt.isMetaDown()){
-            
-            int row = jt_Paises.getClosestRowForLocation(evt.getX(), evt.getY());
-            jt_Paises.setSelectionRow(row);
-            
-            
-            Object o = jt_Paises.getSelectionPath().getLastPathComponent();
-            
-            if(o instanceof Pais){
-                
-                popup_ModArbol.show(jt_Paises, evt.getX(), evt.getX());
-                nodo_Seleccionado = (DefaultMutableTreeNode)o;
-                paisSeleccionado = (Pais)o;
-            }else if(o instanceof Persona){
-                popup_ModPersona.show(jt_Paises, evt.getX(), evt.getY());
-                nodo_Seleccionado = (DefaultMutableTreeNode)o;
-                personaSeleccionada = (Persona)o;
-            }
-        }
-    }//GEN-LAST:event_popup_ModArbolMouseClicked
-
     private void jp_EliminarPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_EliminarPerActionPerformed
-        
+
         DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
-        
+
         modelo.removeNodeFromParent(nodo_Seleccionado);
-        
+
         JOptionPane.showMessageDialog(jt_Paises, "Se elimino la persona correctamente");
     }//GEN-LAST:event_jp_EliminarPerActionPerformed
 
     private void jp_ExpatriarPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_ExpatriarPerActionPerformed
         DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
-        
+
         modelo.removeNodeFromParent(nodo_Seleccionado);
-        
-        
-        if(personaSeleccionada.getGenero().equals("Masculino")){
+
+        if (personaSeleccionada.getGenero().equals("Masculino")) {
             DefaultListModel mod = (DefaultListModel) jl_Masculino.getModel();
-            
+
             mod.addElement(personaSeleccionada);
-        }else if(personaSeleccionada.getGenero().equals("Femenino")){
+        } else if (personaSeleccionada.getGenero().equals("Femenino")) {
             DefaultListModel modf = (DefaultListModel) jl_Femenino.getModel();
-            
+
             modf.addElement(personaSeleccionada);
-            
-            
+
             JOptionPane.showMessageDialog(jt_Paises, "Se expatrio correctamente a la persona");
         }
     }//GEN-LAST:event_jp_ExpatriarPerActionPerformed
 
     private void jp_ModPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jp_ModPerActionPerformed
-       DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
-       
-       personaSeleccionada.setNombre(JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo nombre: "));
-       
-       JOptionPane.showMessageDialog(jt_Paises, "Se modifico el nombre de la persona");
-       
-       modelo.reload();
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Paises.getModel();
+
+        personaSeleccionada.setNombre(JOptionPane.showInputDialog(jt_Paises, "Ingrese un nuevo nombre: "));
+
+        JOptionPane.showMessageDialog(jt_Paises, "Se modifico el nombre de la persona");
+
+        modelo.reload();
     }//GEN-LAST:event_jp_ModPerActionPerformed
+
+    private void jt_PaisesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_PaisesMouseClicked
+        if (evt.isMetaDown()) {
+
+            int row = jt_Paises.getClosestRowForLocation(evt.getX(), evt.getY());
+            jt_Paises.setSelectionRow(row);
+
+            Object o = jt_Paises.getSelectionPath().getLastPathComponent();
+
+            if (nodo_Seleccionado.getUserObject() instanceof Pais) {
+
+                popup_ModArbol.show(jt_Paises, evt.getX(), evt.getX());
+                nodo_Seleccionado = (DefaultMutableTreeNode) o;
+                paisSeleccionado = (Pais) o;
+                
+            } else if (nodo_Seleccionado.getUserObject() instanceof Persona) {
+                popup_ModPersona.show(jt_Paises, evt.getX(), evt.getY());
+                nodo_Seleccionado = (DefaultMutableTreeNode) o;
+                personaSeleccionada = (Persona) o;
+            }
+        }
+    }//GEN-LAST:event_jt_PaisesMouseClicked
 
     /**
      * @param args the command line arguments
